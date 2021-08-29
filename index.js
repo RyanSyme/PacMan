@@ -1,6 +1,7 @@
 const width = 28
 const grid = document.querySelector('.grid')
-const scoreDisplay = document.querySelector('#score')
+const scoreDisplay = document.getElementById('score')
+let score = 0
 let squares = []
 
 // grid layout
@@ -66,7 +67,82 @@ function createBoard() {
 
 createBoard()
 
-// pacman start pos.
-let pacmanStartIndex = 490;
+// pacman start position
+let pacmanCurrentIndex = 490;
 
-squares[pacmanStartIndex].classList.add('pacman')
+squares[pacmanCurrentIndex].classList.add('pacman')
+
+function control(e) {
+  squares[pacmanCurrentIndex].classList.remove('pacman')
+  switch(e.keyCode) {
+    case 40:
+      console.log('pressed down')
+      if (
+          !squares[pacmanCurrentIndex + width].classList.contains('wall') &&
+          !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair') &&
+          pacmanCurrentIndex + width < width * width
+          )
+          pacmanCurrentIndex += width
+      break
+    case 38:
+      console.log('pressed up')
+      if (
+          !squares[pacmanCurrentIndex - width].classList.contains('wall') &&
+          !squares[pacmanCurrentIndex - width].classList.contains('ghost-lair') &&
+          pacmanCurrentIndex - width >= 0
+          )
+          pacmanCurrentIndex -= width
+      break
+    case 37:
+      console.log('pressed left')
+      if (
+          !squares[pacmanCurrentIndex - 1].classList.contains('wall') &&
+          !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair') &&
+          pacmanCurrentIndex % width !== 0
+          )
+          pacmanCurrentIndex -= 1
+          if (pacmanCurrentIndex === 364) {
+            pacmanCurrentIndex = 391
+          }
+      break
+    case 39:
+      console.log('pressed right')
+      if (
+          !squares[pacmanCurrentIndex + 1].classList.contains('wall') &&
+          !squares[pacmanCurrentIndex + 1].classList.contains('ghost-lair') &&
+          pacmanCurrentIndex % width < width - 1
+          )
+          pacmanCurrentIndex += 1
+          if (pacmanCurrentIndex === 391) {
+            pacmanCurrentIndex = 364
+          }
+      break
+  }
+  squares[pacmanCurrentIndex].classList.add('pacman')
+  eatPacdot()
+}
+
+document.addEventListener('keyup', control)
+
+function eatPacdot() {
+  if (squares[pacmanCurrentIndex].classList.contains('pac-dot')) {
+    score++
+    scoreDisplay.innerHTML = score
+    squares[pacmanCurrentIndex].classList.remove('pac-dot')
+  }
+}
+
+class Ghost {
+  constructor(className, startIndex, speed) {
+    this.className = className
+    this.startIndex = startIndex
+    this.speed = speed
+  }
+}
+
+ghosts = [
+  new Ghost('blinky', 348, 250),
+  new Ghost('pinky', 376, 300),
+  new Ghost('inky', 351, 350),
+  new Ghost('clyde', 379, 400)
+]
