@@ -17,13 +17,13 @@ html, body {
 }
 
 .pac-dot {
-    background-color: #008000;
+    background-color: #1a1a1a;
     border: 5px solid #fff;
     box-sizing: border-box;
 }
 
 .wall {
-    background-color: #0000ff;
+    background-color: #164916;
 }
 
 .power-pellet {
@@ -43,16 +43,21 @@ html, body {
 }
 
 .pinky {
-    background-color: pink;
+    background-color: rgb(255, 133, 154);
     border: none;
 }
 
 .inky {
-    background-color: aqua;
+    background-color: #2600ff;
     border: none;
 }
 
 .clyde {
     background-color: orange;
+    border: none;
+}
+
+.scared-ghost {
+    background-color: #6eabb3;
     border: none;
 }
